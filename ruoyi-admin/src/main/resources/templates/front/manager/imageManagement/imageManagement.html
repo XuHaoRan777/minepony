@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>宣传图片管理</title>
+    <link rel="stylesheet" href="../../../../static/css/bootstrap5.3/bootstrap.min.css" th:href="@{/css/bootstrap5.3/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../../../../static/js/layui2.8/css/layui.css" th:href="@{/js/layui2.8/css/layui.css}" />
+    <style>
+        img{
+            max-width: 400px;
+        }
+        .img-box{
+            width: 100%;
+            height: auto;
+            border: 2px solid grey;
+            border-radius: 5px;
+            margin-left: 0;
+            padding: 10px;
+        }
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .img-group{
+            width: 24%;
+            border-radius: 5px;
+            border: 2px solid darkgray;
+            margin-bottom:10px;
+            margin-left:10px;
+            float: left;
+        }
+        .img-btn{
+            padding: 10px;
+            position: relative;
+        }
+        .btn-outline-danger{
+            position: absolute;
+            right: 2%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="col-md-11">
+<p class="text-start" style="font-size: 18px;">上传图片:</p>
+</div>
+<div class="col-md-6" style=" border: 1px solid grey;border-radius: 5px;">
+    <div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+        <i class="layui-icon layui-icon-upload"></i>
+        <div>点击图片，或将图片拖拽到此处</div>
+        <div class="layui-hide" id="ID-upload-demo-preview">
+            <hr> <img src="" alt="上传成功后渲染" style="max-width: 100%">
+        </div>
+    </div>
+</div>
+
+<div class="col-md-11" style=" margin-top: 5%;">
+    <p class="text-start" style="font-size: 18px;">已上传的图片:</p>
+</div>
+
+<div class="col-md-11 img-box clearfix" id="img_box">
+
+
+
+</div>
+
+</body>
+<script src="../../../../static/js/bootstrap5.3/bootstrap.min.js" th:src="@{/js/bootstrap5.3/bootstrap.js}"></script>
+<script src="../../../../static/js/layui2.8/layui.js" th:src="@{/js/layui2.8/layui.js}"></script>
+<script src="../../../../static/js/axios/axios.min.js" th:src="@{/js/axios/axios.min.js}"></script>
+<script src="../../../../static/js/common.js" th:src="@{/js/common.js}"></script>
+<script>
+    let dataPrefix = '/front/ajax';
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+        getImageGroup();
+
+    });
+
+    // 获取上传过的图片，并渲染在 img-box中
+    function getImageGroup(){
+        // 获取上传的图片列表
+        instance.post(dataPrefix + '/promotionalImageList', "")
+            .then(response => {
+                // 请求成功，处理响应数据
+                if(response.data.code === success_code){
+                    showAlert(response.data.message,1);
+                }else if(response.data.code === warning_code){
+                    showAlert(response.data.message,3);
+                    return;
+                }else if(response.data.code === error_code || response.data.code === bad_code){
+                    showAlert(response.data.message,4);
+                    return;
+                }
+                // console.log(response.data);
+                let array = response.data;
+                if(array.length > 0){
+                    let img_group = '';
+                    let img_box = document.getElementById('img_box');
+                    for (let i = 0; i < array.length; i++) {
+                        let img_obj = array[i];
+                        let input1_id = 'btnradio' + img_obj.id + "_1";
+                        let input2_id = 'btnradio' + img_obj.id + "_2";
+                        img_group += '<div class="img-group">' +
+                            '             <img src="'+ baseUrl + '/front/file/promotionalImage/' + img_obj.imagename +'" class="img-fluid" alt="' + img_obj.imagename + '"/>' +
+                            '             <div class="img-btn">' +
+                            '                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">' +
+                            '                     <input type="radio" class="btn-check" name="'+input1_id+'" id="'+input1_id+'" autoComplete="off" '+(img_obj.enable === 1 ? 'checked' : '')+'>' +
+                            '                     <label class="btn btn-outline-primary" for="'+input1_id+'" onclick="enableImage('+img_obj.id+','+img_obj.enable+',1)">启用</label>' +
+                            '                     <input type="radio" class="btn-check" name="'+input1_id+'" id="'+input2_id+'" autoComplete="off" '+(img_obj.enable === 0 ? 'checked' : '')+'>' +
+                            '                     <label class="btn btn-outline-primary" for="'+input2_id+'" onclick="enableImage('+img_obj.id+','+img_obj.enable+',0)">禁用</label>' +
+                            '                 </div>' +
+                            '                 <button type="button" class="btn btn-outline-danger" onclick="deleteImage('+img_obj.id+')">删除</button>' +
+                            '             </div>' +
+                            '         </div>';
+
+                    }
+                    img_box.innerHTML = img_group;
+                }
+
+            })
+            .catch(error => {
+                // 请求失败，处理错误
+                console.error(error);
+                showAlert(error,4);
+            });
+    }
+
+    // 禁用/启用 图片
+    function enableImage(imageId,old_enable,enable){
+        // 如果已经是 启用或者关闭，还点击了对应的按钮就返回
+        if(old_enable === enable){
+            return;
+        }
+        let param = {imageId: imageId, enable: enable};
+        instance.post(dataPrefix + '/enablePromotionalImage', param)
+            .then(response => {
+                // 请求成功，处理响应数据
+                // console.log(response.data);
+                if(response.data.code === success_code){
+                    showAlert(response.data.message,1);
+                }else if(response.data.code === warning_code){
+                    showAlert(response.data.message,3);
+                    return;
+                }else if(response.data.code === error_code || response.data.code === bad_code){
+                    showAlert(response.data.message,4);
+                    return;
+                }
+                // 删除成功后重新渲染图片列表
+                getImageGroup();
+            })
+            .catch(error => {
+                // 请求失败，处理错误
+                console.error(error);
+                showAlert(error,4);
+                return null;
+            });
+    }
+
+    // 删除图片
+    function deleteImage(imageId){
+        let param = {imageId: imageId};
+        instance.post(dataPrefix + '/removePromotionalImage', param)
+            .then(response => {
+                // 请求成功，处理响应数据
+                // console.log(response.data);
+                if(response.data.code === success_code){
+                    showAlert(response.data.message,1);
+                }else if(response.data.code === warning_code){
+                    showAlert(response.data.message,3);
+                    return;
+                }else if(response.data.code === error_code || response.data.code === bad_code){
+                    showAlert(response.data.message,4);
+                    return;
+                }
+                // 删除成功后重新渲染图片列表
+                getImageGroup();
+            })
+            .catch(error => {
+                // 请求失败，处理错误
+                console.error(error);
+                showAlert(error,4);
+                return null;
+            });
+    }
+
+    // layui 上传文件
+    let uploadParam = { 'test0': 312312 };
+    layui.use(function(){
+        var upload = layui.upload;
+        var $ = layui.$;
+        // 渲染
+        upload.render({
+            elem: '#ID-upload-demo-drag',
+            url: baseUrl + dataPrefix+'/savePromotionalImage', // 此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+            accept: 'images',
+            data: {
+                params: function(){
+                    return JSON.stringify(uploadParam);
+                }
+            },
+            done: function(res){
+                showAlert('上传成功',1);
+                // console.log(res)
+                // 渲染列表
+                getImageGroup();
+            },error: function(index, upload){
+                // console.log(index); // 当前文件的索引
+                // upload(); 重新上传的方法
+                showAlert('上传失败！',4);
+            }
+        });
+    });
+
+</script>
+
+</html>

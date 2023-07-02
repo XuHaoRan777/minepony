@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <link href="../static/css/element-plus-2.3.7.css" th:href="@{/css//element-plus-2.3.7.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="app">
+
+
+
+</div>
+</body>
+<script src="../../../static/js/vue3.js" th:src="@{/js/vue3.js}"></script>
+<script src="../../../static/js/element-plus-2.3.7.js" th:src="@{/js/element-plus-2.3.7.js}"></script>
+<script>
+    const { createApp, reactive, toRefs, ref, onMounted } = Vue;
+
+    const app = createApp({
+        setup() {
+
+        },
+    });
+    app.use(ElementPlus);
+    app.mount("#app");
+
+</script>
+</html>

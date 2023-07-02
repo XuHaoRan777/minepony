@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MineponyServerUpdateLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.MineponyServerUpdateLog">
+        <id column="id" property="id" />
+        <result column="version" property="version" />
+        <result column="description" property="description" />
+        <result column="createtime" property="createtime" />
+        <result column="createrid" property="createrid" />
+        <result column="updatetime" property="updatetime" />
+        <result column="updaterid" property="updaterid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, version, description, createtime, createrid, updatetime, updaterid
+    </sql>
+    <!-- 查询列表 -->
+    <select id="selectList" parameterType="java.util.Map" resultType="com.ruoyi.system.domain.MineponyServerUpdateLog">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM minepony_server_update_log
+        <where>
+            <if test="version != null and version != ''">
+                AND version = #{version}
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND createtime BETWEEN STR_TO_DATE(#{startTime}, '%Y-%m-%d') AND STR_TO_DATE(#{endTime}, '%Y-%m-%d')
+            </if>
+        </where>
+    </select>
+
+</mapper>

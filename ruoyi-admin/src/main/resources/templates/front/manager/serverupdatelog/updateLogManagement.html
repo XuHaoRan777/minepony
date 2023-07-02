@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>更新日志管理</title>
+<!--    <link rel="stylesheet" href="../../../static/css/bootstrap5.3/bootstrap.min.css" th:href="@{/css/bootstrap5.3/bootstrap.min.css}" />-->
+    <link rel="stylesheet" href="../../../../static/js/layui2.8/css/layui.css" th:href="@{/js/layui2.8/css/layui.css}" />
+    <th:block th:include="include :: header('minepiny - 更新日志管理')" />
+    <style>
+
+    </style>
+</head>
+<body class="gray-bg">
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="dept-form">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            版本号:
+                            <input type="text" name="version" id="version" />
+                        </li>
+                        <li>
+                            时间范围:
+                            <div class="layui-inline" id="ID-laydate-range">
+                                <div class="layui-input-inline">
+                                    <input type="text" autocomplete="off" name="startTime" id="ID-laydate-start-date" class="layui-input" placeholder="开始日期">
+                                </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline">
+                                    <input type="text" autocomplete="off" name="endTime" id="ID-laydate-end-date" class="layui-input" placeholder="结束日期">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.treeTable.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="addServerLog()">
+                <i class="fa fa-plus"></i> 新增
+            </a>
+            <a class="btn btn-primary" onclick="$.operate.edit()">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-tree-table"></table>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<th:block th:include="include :: footer" />
+<!--<script src="../../../static/js/bootstrap5.3/bootstrap.min.js" th:src="@{/js/bootstrap5.3/bootstrap.js}"></script>-->
+<script src="../../../../static/js/layui2.8/layui.js" th:src="@{/js/layui2.8/layui.js}"></script>
+<script src="../../../../static/js/axios/axios.min.js" th:src="@{/js/axios/axios.min.js}"></script>
+<script src="../../../../static/js/common.js" th:src="@{/js/common.js}"></script>
+<script>
+    var viewPrefix = baseUrl + '/front';
+    var dataPrefix = baseUrl + '/front/ajax';
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+        var options = {
+            code: "id",
+            parentCode: "parentId",
+            uniqueId: "id",
+            url: dataPrefix + "/serverUpdateLogList",
+            createUrl: viewPrefix + "/add/{id}",
+            updateUrl: viewPrefix + "/edit/{id}",
+            removeUrl: viewPrefix + "/remove/{id}",
+            modalName: "服务器更新日志",
+            columns: [{
+                field: 'selectItem',
+                radio: true
+            },
+                {
+                    field: 'version',
+                    title: '版本',
+                    align: "center"
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: "left"
+                },
+                {
+                    field: 'description',
+                    title: '更新描述',
+                    align: "left",
+                    cellStyle: function (value, row, index, field) {
+                        return {
+                            css: {
+                                "min-width": '50px',
+                                "max-width": '300px',
+                                "white-space": 'nowrap',
+                                "text-overflow": 'ellipsis',
+                                "overflow": 'hidden'
+                            }
+                        }
+                    }
+                },
+
+                {
+                    title: '操作',
+                    align: 'left',
+                    formatter: function(value, row, index) {
+                        if (row.parentId != 0) {
+                            var actions = [];
+                            actions.push('<a class="btn btn-success btn-xs " href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs " href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-trash"></i>删除</a>');
+                            return actions.join('');
+                        } else {
+                            return "";
+                        }
+                    }
+                }]
+        };
+        $.treeTable.init(options);
+    });
+
+    layui.use(function(){
+        var laydate = layui.laydate;
+        // 日期范围 - 左右面板独立选择模式
+        laydate.render({
+            elem: '#ID-laydate-range',
+            range: ['#ID-laydate-start-date', '#ID-laydate-end-date']
+        });
+    });
+
+    // 添加
+    function addServerLog(){
+        layui.layer.open({
+            type: 2,
+            title: '新增',
+            area: ['30%', '50%'], // 宽高
+            content: viewPrefix + "/serverUpdateLogAdd"
+        });
+    }
+
+</script>
+
+</html>

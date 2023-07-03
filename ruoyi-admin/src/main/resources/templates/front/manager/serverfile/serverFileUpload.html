@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>宣传图片管理</title>
+  <link rel="stylesheet" href="../../../../static/css/bootstrap5.3/bootstrap.min.css" th:href="@{/css/bootstrap5.3/bootstrap.min.css}" />
+  <link rel="stylesheet" href="../../../../static/js/layui2.8/css/layui.css" th:href="@{/js/layui2.8/css/layui.css}" />
+  <style>
+    td{
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+
+<div class="col-md-6">
+  <label for="ID-upload-demo-drag" class="text-start" style="font-size: 18px;">上传文件:</label>
+</div>
+<div class="col-md-6" style=" border: 2px solid grey;border-radius: 5px;">
+  <div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+    <i class="layui-icon layui-icon-upload"></i>
+    <div>点击此处，或将服务包拖拽到此处</div>
+  </div>
+</div>
+
+<div class="col-md-6" style=" margin-top: 5%;">
+  <p class="text-start" style="font-size: 18px;">当前服务包:</p>
+  <table class="table">
+    <thead class="table-light">
+      <tr>
+        <td>文件名</td>
+        <td>上传时间</td>
+        <td>操作</td>
+      </tr>
+    </thead>
+    <tbody id="file_info_table">
+
+    </tbody>
+  </table>
+</div>
+
+
+
+
+</div>
+
+</body>
+<script src="../../../../static/js/bootstrap5.3/bootstrap.min.js" th:src="@{/js/bootstrap5.3/bootstrap.js}"></script>
+<script src="../../../../static/js/layui2.8/layui.js" th:src="@{/js/layui2.8/layui.js}"></script>
+<script src="../../../../static/js/axios/axios.min.js" th:src="@{/js/axios/axios.min.js}"></script>
+<script src="../../../../static/js/common.js" th:src="@{/js/common.js}"></script>
+<script>
+  let dataPrefix = '/front/ajax';
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+    // 获取服务包文件消息
+    getServerFile();
+
+  });
+
+
+  // layui 上传文件
+  let uploadParam = {};
+  layui.use(function(){
+    var upload = layui.upload;
+    var layer = layui.layer;
+    var $ = layui.$;
+    // 渲染
+    upload.render({
+      elem: '#ID-upload-demo-drag',
+      url: baseUrl + dataPrefix+'/serverFileUpload', // 此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+      accept: 'file',
+      data: {
+        params: function(){
+          return JSON.stringify(uploadParam);
+        }
+      },before: function(obj){
+        loadIndex = layer.msg('正在上传...', {
+          icon: 16,
+          shade: 0.3
+        });
+      },done: function(res){
+        layer.close(loadIndex);
+        showAlert('上传成功！',1);
+        // console.log(res)
+        // 渲染列表
+        getServerFile();
+      },error: function(index, upload){
+        // console.log(index); // 当前文件的索引
+        // upload(); 重新上传的方法
+        showAlert('上传失败！',4);
+      }
+    });
+  });
+
+  // 获取服务包文件消息
+  function getServerFile(){
+    instance.post(dataPrefix + '/getServerFile', "")
+            .then(response => {
+              // 请求成功，处理响应数据
+              if(response.data.code === success_code){
+                // showAlert(response.data.message,1);
+              }else if(response.data.code === warning_code){
+                showAlert(response.data.message,3);
+                return;
+              }else if(response.data.code === error_code || response.data.code === bad_code){
+                showAlert(response.data.message,4);
+                return;
+              }
+              // console.log(response.data);
+              let fileData = response.data.data;
+              // console.log(fileData);
+              let file_info_table = document.getElementById('file_info_table');
+              let file_info = '';
+              if(Object.keys(fileData).length === 0 && fileData.constructor === Object){
+                file_info = '<tr>' +
+                        '      <td colspan="3" style="text-align: center">未上传服务包文件！</td>' +
+                        '    </tr>';
+              }else {
+                file_info = '<tr>' +
+                        '      <td>'+fileData.filename+'</td>' +
+                        '      <td>'+formatTimestamp(fileData.uploadtime)+'</td>' +
+                        '      <td>' +
+                        '         <button type="button" class="btn btn-outline-primary" onclick="downloadFile(\''+baseUrl + '/front/file/serverFile' + '\')">下载</button>' +
+                        '         <button type="button" class="btn btn-outline-danger" onclick="removeServerFile()">删除</button>' +
+                        '      </td>' +
+                        '    </tr>';
+              }
+              file_info_table.innerHTML = file_info;
+
+            })
+            .catch(error => {
+              // 请求失败，处理错误
+              console.error(error);
+              showAlert(error,4);
+            });
+  }
+
+  // 删除文件
+  function removeServerFile(){
+    loadIndex = layer.msg('正在删除...', {
+      icon: 16,
+      shade: 0.3
+    });
+    instance.post(dataPrefix + '/removeServerFile', "")
+            .then(response => {
+              // 请求成功，处理响应数据
+              layer.close(loadIndex);
+              if(response.data.code === success_code){
+                showAlert(response.data.message,1);
+              }else if(response.data.code === warning_code){
+                showAlert(response.data.message,3);
+                return;
+              }else if(response.data.code === error_code || response.data.code === bad_code){
+                showAlert(response.data.message,4);
+                return;
+              }
+              // console.log(response.data);
+              getServerFile();
+            })
+            .catch(error => {
+              // 请求失败，处理错误
+              layer.close(loadIndex);
+              console.error(error);
+              showAlert(error,4);
+            });
+  }
+
+</script>
+
+</html>

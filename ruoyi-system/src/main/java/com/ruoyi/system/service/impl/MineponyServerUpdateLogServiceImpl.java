@@ -56,7 +56,7 @@ public class MineponyServerUpdateLogServiceImpl extends ServiceImpl<MineponyServ
                 save(serverUpdateLog);
             }
 
-            return AjaxJsonResult.error("保存成功！");
+            return AjaxJsonResult.success("保存成功！");
         }catch (Exception e){
             e.printStackTrace();
             return AjaxJsonResult.error("保存失败！");
@@ -74,7 +74,7 @@ public class MineponyServerUpdateLogServiceImpl extends ServiceImpl<MineponyServ
             // 删除
             this.removeById(id);
 
-            return AjaxJsonResult.error("删除成功！");
+            return AjaxJsonResult.success("删除成功！");
         }catch (Exception e){
             e.printStackTrace();
             return AjaxJsonResult.error("删除失败！");

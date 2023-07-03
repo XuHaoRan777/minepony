@@ -6,9 +6,11 @@ let baseUrl = 'http://127.0.0.1:8077';
 // 各种状态码
 let success_code = 2001;
 let warning_code = 4001;
-let error_code = 5005;
+let error_code = 5001;
 let bad_code = 500;
 
+// 加载遮罩层对象
+var loadIndex;
 
 // 创建axios的一个实例
 const instance = axios.create({
@@ -97,4 +99,57 @@ function showAlert(message, type) {
             document.head.removeChild(style); // remove the style element as well
         }, 500); // 和动画持续时间一致
     }, 2500);
+}
+
+// 将表单数据转换成对象
+function getFormData(formId) {
+    const form = document.getElementById(formId);
+
+    if (form) {
+        const formData = new FormData(form);
+        const result = {};
+
+        formData.forEach((value, key) => {
+            if (value) {
+                if (result[key]) {
+                    result[key] = result[key] + "," + value;
+                } else {
+                    result[key] = value;
+                }
+            }
+        });
+
+        return result;
+    }
+
+    return {};
+}
+
+// 关闭窗口
+function closeLayer(){
+    let index = parent.layer.getFrameIndex(window.name);
+    parent.layer.close(index);
+}
+
+// 时间戳转时间字符串 yyyy-MM-dd HH:mm
+function formatTimestamp(timestamp) {
+    var date = new Date(timestamp);
+
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+    var hours = ("0" + date.getHours()).slice(-2);
+    var minutes = ("0" + date.getMinutes()).slice(-2);
+
+    return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+}
+
+// a标签下载文件
+function downloadFile(url) {
+    const body = document.querySelector("body");
+    const a = document.createElement("a");
+    a.href = url
+    a.download = "fileName";
+    body.appendChild(a);
+    a.click();
 }

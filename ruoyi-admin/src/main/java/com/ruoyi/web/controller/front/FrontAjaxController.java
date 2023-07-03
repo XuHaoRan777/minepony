@@ -6,6 +6,7 @@ import com.ruoyi.common.utils.AjaxJsonResult;
 import com.ruoyi.common.utils.ShiroUtils;
 import com.ruoyi.system.domain.MineponyServerUpdateLog;
 import com.ruoyi.system.service.MineponyPromotionalImageService;
+import com.ruoyi.system.service.MineponyServerFileService;
 import com.ruoyi.system.service.MineponyServerUpdateLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Map;
 /**
  * 关于宣传网站的信息操作
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/front/ajax")
 public class FrontAjaxController extends BaseController{
@@ -25,6 +27,8 @@ public class FrontAjaxController extends BaseController{
     MineponyPromotionalImageService promotionalImageService;
     @Autowired
     MineponyServerUpdateLogService serverUpdateLogService;
+    @Autowired
+    MineponyServerFileService serverFileService;
 
     /**
      * 获取服务器宣传图片列表
@@ -77,4 +81,51 @@ public class FrontAjaxController extends BaseController{
         return list;
     }
 
+    /**
+     * 保存服务器更新日志
+     * @param serverUpdateLog
+     * @return
+     */
+    @PostMapping("/saveUpdateLog")
+    public String saveUpdateLog(@RequestBody MineponyServerUpdateLog serverUpdateLog){
+        return serverUpdateLogService.saveServerUpdateLog(serverUpdateLog,ShiroUtils.getUserId());
+    }
+
+    /**
+     * 删除服务器更新日志
+     * @param id
+     * @return
+     */
+    @PostMapping("/removeUpdateLog/{id}")
+    public String removeUpdateLog(@PathVariable("id") String id){
+        return serverUpdateLogService.removeServerUpdateLog(Integer.valueOf(id));
+    }
+
+    /**
+     * 上传服务器文件
+     * @param file
+     * @return
+     */
+    @PostMapping("/serverFileUpload")
+    public String serverFileUpload(MultipartFile file){
+        return serverFileService.serverFileUpload(file,ShiroUtils.getUserId());
+    }
+
+    /**
+     * 获取当前服务器文件消息
+     * @return
+     */
+    @PostMapping("/getServerFile")
+    public String getServerFile(){
+        return serverFileService.getServerFile();
+    }
+
+    /**
+     * 删除当前服务器文件信息
+     * @return
+     */
+    @PostMapping("/removeServerFile")
+    public String removeServerFile(){
+        return serverFileService.removeServerFile();
+    }
 }

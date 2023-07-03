@@ -21,7 +21,7 @@ public class FrontIndexController extends BaseController {
 
     @GetMapping("/minepony")
     public String frontHomePage(){
-        return prefix + "index";
+        return prefix + "plan1/index";
     }
 
     /**

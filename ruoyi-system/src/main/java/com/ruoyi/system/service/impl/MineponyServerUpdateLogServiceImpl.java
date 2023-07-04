@@ -31,7 +31,7 @@ public class MineponyServerUpdateLogServiceImpl extends ServiceImpl<MineponyServ
      */
     @Override
     public List<MineponyServerUpdateLog> getUpdateLogList(Map<String, Object> params) {
-        return baseMapper.selectList(params);
+        return baseMapper.getUpdateLogList(params);
     }
 
     /**
@@ -79,5 +79,16 @@ public class MineponyServerUpdateLogServiceImpl extends ServiceImpl<MineponyServ
             e.printStackTrace();
             return AjaxJsonResult.error("删除失败！");
         }
+    }
+
+    /**
+     * 获取服务器更新日志（倒叙）
+     * @return
+     */
+    @Override
+    public List<MineponyServerUpdateLog> getUpdateListDesc() {
+        QueryWrapper<MineponyServerUpdateLog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
+        return list(queryWrapper);
     }
 }

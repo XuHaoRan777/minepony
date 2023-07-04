@@ -24,4 +24,7 @@ public interface MineponyServerUpdateLogService extends IService<MineponyServerU
 
     // 删除日志
     public String removeServerUpdateLog(Integer id);
+
+    // 获取服务器更新日志（倒叙）
+    public List<MineponyServerUpdateLog> getUpdateListDesc();
 }

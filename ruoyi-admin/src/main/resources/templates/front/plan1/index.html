@@ -17,7 +17,7 @@
           th:href="@{/front/plan1/css/font-awesome.min.css}">
     <link rel="stylesheet" href="../../../static/front/plan1/css/animate.css" th:href="@{/front/plan1/css/animate.css}">
     <link rel="stylesheet" href="../../../static/front/plan1/css/style.css" th:href="@{/front/plan1/css/style.css}">
-    <script src="../../../static/js/axios/axios.min.js"></script>
+    <link rel="stylesheet" href="../../../static/front/plan1/js/viewer/viewer.min.css" th:href="@{/front/plan1/js/viewer/viewer.min.css}">
 
 </head>
 <body data-spy="scroll" data-target=".main-nav">
@@ -113,24 +113,9 @@
         <div class="row">
             <div class="col-md-7 col-sm-12 pull-right">
                 <div class="profile-desc wow fadeInRight">
-                    <h2 class="section-title uppercase">Hello</h2>
-                    <h2 class="section-title uppercase">欢迎来到 MinePony</h2>
-                    <h2 class="section-title uppercase">马国日记服务器</h2>
+                    <h2 class="section-title uppercase" id="server_Introduction_title"></h2>
                     <br/>
-                    <p>
-                        介绍服务器.......介绍服务器.......介绍服务器.......介绍服务器.......介绍服务器.......介绍服务器.......介绍服务器.......
-                        介绍服务器.......介绍服务器.......介绍服务器.......介绍服务器.......介绍服务器.......介绍服务器.......介绍服务器.......
-                    </p>
-                    <br/>
-                    <p class="text-grey animated bounceInUp" style="opacity: 1;">
-                        关于服务器.......关于服务器.......关于服务器.......关于服务器.......关于服务器.......关于服务器.......关于服务器.......
-                        关于服务器.......关于服务器.......关于服务器.......关于服务器.......关于服务器.......关于服务器.......关于服务器.......
-                    </p>
-                    <br/>
-                    <p class="text-grey animated bounceInUp" style="opacity: 1;">
-                        服务器注意事项...服务器注意事项...服务器注意事项...服务器注意事项...服务器注意事项...服务器注意事项...服务器注意事项...
-                        服务器注意事项...服务器注意事项...服务器注意事项...服务器注意事项...服务器注意事项...服务器注意事项...服务器注意事项...
-                    </p>
+                    <p style="font-size: 18px;" id="server_Introduction_content"></p>
                 </div>
             </div>
         </div> <!-- row end -->
@@ -141,18 +126,36 @@
 
 <!-- announcement start -->
 
-<section id="section-announcement" class="section-padding">
+<!--<section id="section-announcement" class="section-padding">-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-12 text-center wow fadeInUp">-->
+<!--                <h2 class="heading-title">服务器公告</h2>-->
+<!--                <p style="font-size: 18px">-->
+<!--                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<section id="section-announcement" class="section-padding" style="background-color: black">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 text-center wow fadeInUp">
+            <div class="col-md-12 text-center">
                 <h2 class="heading-title">服务器公告</h2>
-                <p>
-                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                    <br/>
-                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                    bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                </p>
+            </div>
+            <div class="col-md-12 col-sm-12 wow fadeInLeft">
+                <div class="skill-desc">
+                    <p style="font-size: 18px" id="server_bulletin_content"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -170,59 +173,57 @@
                 <div class="resume-inner">
                     <h2 class="heading-title">服务器更新记录</h2>
                     <p>
-                        记录服务器近 N 次的更新记录....
+                        记录服务器近 4 次的更新记录....
                     </p>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="timeline-centered">
+            <div class="timeline-centered" id="update_log_div">
 
-                <article class="timeline-entry">
-                    <div class="timeline-entry-inner">
-                        <div class="timeline-icon bg-success">
-                            <i class="entypo-feather"></i>
-                        </div>
+<!--                <article class="timeline-entry">-->
+<!--                    <div class="timeline-entry-inner">-->
+<!--                        <div class="timeline-icon bg-success">-->
+<!--                            <i class="entypo-feather"></i>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-label">-->
+<!--                            <h3 class="resume-title">2022年 XX月 XX日</h3>-->
+<!--                            <p>-->
+<!--                                更新了...bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </article>-->
 
-                        <div class="timeline-label">
-                            <h3 class="resume-title">2022年 XX月 XX日</h3>
-                            <p>
-                                更新了...bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                            </p>
-                        </div>
-                    </div>
-                </article>
+<!--                <article class="timeline-entry">-->
+<!--                    <div class="timeline-entry-inner">-->
+<!--                        <div class="timeline-icon bg-success">-->
+<!--                            <i class="entypo-feather"></i>-->
+<!--                        </div>-->
 
-                <article class="timeline-entry">
-                    <div class="timeline-entry-inner">
-                        <div class="timeline-icon bg-success">
-                            <i class="entypo-feather"></i>
-                        </div>
+<!--                        <div class="timeline-label">-->
+<!--                            <h3 class="resume-title">2022年 XX月 XX日</h3>-->
+<!--                            <p>-->
+<!--                                更新了...bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </article>-->
 
-                        <div class="timeline-label">
-                            <h3 class="resume-title">2022年 XX月 XX日</h3>
-                            <p>
-                                更新了...bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                            </p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="timeline-entry">
-                    <div class="timeline-entry-inner">
-                        <div class="timeline-icon bg-success">
-                            <i class="entypo-feather"></i>
-                        </div>
-
-                        <div class="timeline-label">
-                            <h3 class="resume-title">Graphics design diploma</h3>
-                            <p>
-                                更新了...bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                            </p>
-                        </div>
-                    </div>
-                </article>
+<!--                <article class="timeline-entry">-->
+<!--                    <div class="timeline-entry-inner">-->
+<!--                        <div class="timeline-icon bg-success">-->
+<!--                            <i class="entypo-feather"></i>-->
+<!--                        </div>-->
+<!--                        <div class="timeline-label">-->
+<!--                            <h3 class="resume-title">Graphics design diploma</h3>-->
+<!--                            <p>-->
+<!--                                更新了...bla bla bla bla bla bla bla bla bla bla bla bla bla bla-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </article>-->
 
                 <article class="timeline-entry begin">
                     <div class="timeline-entry-inner">
@@ -255,69 +256,68 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="image-row">
 
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic1.jpg" alt=""
-                         class="img-responsive">
-                    <div class="image-overlay text-center">
-                        <a href="../../../static/front/plan1/images/portfolio/portfolio_pic1.jpg"
-                           data-rel="prettyPhoto"><i class="fa fa-arrows-alt"></i></a>
-                    </div>
-                </div>
-            </div> <!-- col-md-4 end -->
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic2.jpg" alt=""
-                         class="img-responsive">
-                </div>
-            </div> <!-- col-md-4 end 3step-->
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic3.jpg" alt=""
-                         class="img-responsive">
-                </div>
-            </div> <!-- col-md-4 end -->
-            <div class="clearfix"></div>
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic4.jpg" alt=""
-                         class="img-responsive">
-                </div>
-            </div> <!-- col-md-4 end -->
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic5.jpg" alt=""
-                         class="img-responsive">
-                </div>
-            </div> <!-- col-md-4 end 6 step -->
-
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic6.jpg" alt=""
-                         class="img-responsive">
-                </div>
-            </div> <!-- col-md-4 end -->
-            <div class="clearfix"></div>
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic7.jpg" alt=""
-                         class="img-responsive">
-                </div>
-            </div> <!-- col-md-4 end -->
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic8.jpg" alt=""
-                         class="img-responsive">
-                </div>
-            </div> <!-- col-md-4 end -->
-            <div class="col-md-4 col-sm-4">
-                <div class="portfolio-box">
-                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic9.jpg" alt=""
-                         class="img-responsive">
-                </div>
-            </div> <!-- col-md-4 end -->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic1.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                    <div class="image-overlay text-center">-->
+<!--                        <a href="../../../static/front/plan1/images/portfolio/portfolio_pic1.jpg"-->
+<!--                           data-rel="prettyPhoto"><i class="fa fa-arrows-alt"></i></a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end &ndash;&gt;-->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic2.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end 3step&ndash;&gt;-->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic3.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end &ndash;&gt;-->
+<!--            <div class="clearfix"></div>-->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic4.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end &ndash;&gt;-->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic5.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end 6 step &ndash;&gt;-->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic6.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end &ndash;&gt;-->
+<!--            <div class="clearfix"></div>-->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic7.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end &ndash;&gt;-->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic8.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end &ndash;&gt;-->
+<!--            <div class="col-md-4 col-sm-4">-->
+<!--                <div class="portfolio-box">-->
+<!--                    <img src="../../../static/front/plan1/images/portfolio/portfolio_pic9.jpg" alt=""-->
+<!--                         class="img-responsive">-->
+<!--                </div>-->
+<!--            </div> &lt;!&ndash; col-md-4 end &ndash;&gt;-->
         </div>
     </div>
 </section>
@@ -367,11 +367,17 @@
         th:src="@{/js/axios/axios.js}"></script>
 <script type="text/javascript" src="../../../static/js/common.js"
         th:src="@{/js/common.js}"></script>
-<!--	<script type="text/javascript" src="../../../static/front/plan1/js/minepony.js" th:src="@{/front/plan1/js/minepony.js}"></script>-->
+<script type="text/javascript" src="../../../static/front/plan1/js/viewer/viewer.min.js"
+        th:src="@{/front/plan1/js/viewer/viewer.min.js}"></script>
+
 <script>
     $(".main-nav").sticky();
 </script>
 
+<input type="hidden" id="promotionalImageList"  th:value="${promotionalImageList}">
+<input type="hidden" id="serverBulletin"  th:value="${serverBulletin}">
+<input type="hidden" id="updateLogList"  th:value="${updateLogList}">
+<input type="hidden" id="serverIntroduction"  th:value="${serverIntroduction}">
 <script>
     new WOW().init();
 
@@ -379,9 +385,72 @@
     document.getElementById('download_btn').href = baseUrl + '/front/file/serverFile';
 
     // 给服务器的一些信息赋值
+    let promotionalImageList = JSON.parse(document.getElementById('promotionalImageList').value);
+    let serverBulletin = JSON.parse(document.getElementById('serverBulletin').value);
+    let updateLogList =  JSON.parse(document.getElementById('updateLogList').value);
+    let serverIntroduction =  JSON.parse(document.getElementById('serverIntroduction').value);
+    // console.log(promotionalImageList);
+    // console.log(serverBulletin);
+    // console.log(updateLogList);
+    // console.log(serverIntroduction);
 
+    // 宣传图片
+    let image_row = document.getElementById('image-row');
+    let image_list = '';
+    for (let i = 0; i < promotionalImageList.length; i++) {
+        let img_obj = promotionalImageList[i];
+        // console.log(img_obj);
+        let id = 'image-'+i;
+        image_list += '<div class="col-md-4 col-sm-4">' +
+            '                <div class="portfolio-box">' +
+            '                    <img id="'+id+'" src="'+ baseUrl + '/front/file/promotionalImage/' + img_obj.imagename +'" alt="这是宣传图片"' +
+            '                         class="img-responsive" data-original = "'+ baseUrl + '/front/file/promotionalImage/' + img_obj.imagename +'">' +
+            // '                    <div class="image-overlay text-center">' +
+            // '                        <a href="'+ baseUrl + '/front/file/promotionalImage/' + img_obj.imagename +'"' +
+            // '                           data-rel="prettyPhoto"><i class="fa fa-arrows-alt"></i></a>' +
+            // '                    </div>' +
+            '                </div>' +
+            '            </div>';
+        if(i !== 0 && i % 3 === 0){
+            image_list += '<div class="clearfix"></div>';
+        }
+    }
+    image_row.innerHTML = image_list;
+    // 设置 viewer 图片查看
+    var viewer = new Viewer(document.getElementById('image-row'),{
+        url: 'data-original'
+    });
 
+    // 设置服务器更新日志
+    let update_log_div = document.getElementById('update_log_div');
+    let update_log_list = '';
+    for (let i = 0; i < updateLogList.length; i++) {
+        let obj = updateLogList[i];
+        update_log_list += '<article class="timeline-entry">' +
+            '    <div class="timeline-entry-inner">' +
+            '        <div class="timeline-icon bg-success">' +
+            '            <i class="entypo-feather"></i>' +
+            '        </div>' +
+            '        <div class="timeline-label">' +
+            '            <h3 class="resume-title">版本: '+ obj.version +'&emsp;更新时间: '+ timestampToChineseDate(obj.createtime) +'</h3>' +
+            '            <p>'+ obj.description +'</p>' +
+            '        </div>' +
+            '    </div>' +
+            '</article>'
+    }
+    update_log_div.innerHTML = update_log_list;
 
+    // 服务器公告
+    let server_bulletin_content = document.getElementById('server_bulletin_content');
+    server_bulletin_content.innerText = serverBulletin.content;
+
+    // 服务器简介
+    // 简介标题
+    let server_Introduction_title = document.getElementById('server_Introduction_title');
+    server_Introduction_title.innerText = serverIntroduction.title;
+    // 简介内容
+    let server_Introduction_content = document.getElementById('server_Introduction_content');
+    server_Introduction_content.innerText = serverIntroduction.content;
 </script>
 </body>
 </html>

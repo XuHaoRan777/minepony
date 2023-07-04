@@ -566,6 +566,7 @@ vertical-align: middle;
 display: block;
 height: auto;
 max-width: 100%;
+cursor: pointer;
 }
 
 .img-rounded {

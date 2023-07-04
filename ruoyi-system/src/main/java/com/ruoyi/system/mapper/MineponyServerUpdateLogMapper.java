@@ -18,6 +18,6 @@ import java.util.Map;
 @Mapper
 public interface MineponyServerUpdateLogMapper extends BaseMapper<MineponyServerUpdateLog> {
 
-    List<MineponyServerUpdateLog> selectList(Map<String,Object> params);
+    List<MineponyServerUpdateLog> getUpdateLogList(Map<String,Object> params);
 
 }

@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.front;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.system.domain.MineponyServerBulletin;
 import com.ruoyi.system.domain.MineponyServerIntroduction;
@@ -35,6 +36,15 @@ public class FrontIndexController extends BaseController {
      */
     @GetMapping("/minepony")
     public String frontHomePage(ModelMap mmap){
+        // 宣传图片列表
+        mmap.put("promotionalImageList", JSONObject.toJSONString(promotionalImageService.getPromotionalImageList()));
+        // 服务器公告
+        mmap.put("serverBulletin",JSONObject.toJSONString(serverBulletinService.list().get(0)));
+        // 服务器更新日志
+        mmap.put("updateLogList",JSONObject.toJSONString(serverUpdateLogService.getUpdateListDesc()));
+        // 服务器简介
+        mmap.put("serverIntroduction",JSONObject.toJSONString(serverIntroductionService.list().get(0)));
+
         return prefix + "plan1/index";
     }
 

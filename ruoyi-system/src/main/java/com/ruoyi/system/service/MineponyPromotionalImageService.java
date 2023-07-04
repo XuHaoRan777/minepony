@@ -7,6 +7,8 @@ import com.ruoyi.system.domain.MineponyPromotionalImage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * <p>
  * 服务器宣传图片 服务类
@@ -25,4 +27,7 @@ public interface MineponyPromotionalImageService extends IService<MineponyPromot
 
     // 删除宣传图片
     String removePromotionalImage(JSONObject jsonObject);
+
+    // 获取启用的宣传图片
+    List<MineponyPromotionalImage> getPromotionalImageList();
 }

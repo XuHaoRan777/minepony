@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ruoyi.common.utils.AjaxJsonResult;
 import com.ruoyi.system.domain.MineponyPromotionalImage;
 import com.ruoyi.system.mapper.MineponyPromotionalImageMapper;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -93,6 +96,17 @@ public class MineponyPromotionalImageServiceImpl extends ServiceImpl<MineponyPro
             e.printStackTrace();
             return AjaxJsonResult.error("删除失败！");
         }
+    }
+
+    /**
+     * 获取启用的宣传图片
+     * @return
+     */
+    @Override
+    public List<MineponyPromotionalImage> getPromotionalImageList() {
+        QueryWrapper<MineponyPromotionalImage> wrapper = new QueryWrapper<>();
+        wrapper.eq("enable",1);
+        return list(wrapper);
     }
 
 

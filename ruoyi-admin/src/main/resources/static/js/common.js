@@ -1,7 +1,7 @@
 // 测试
-let baseUrl = 'http://127.0.0.1:8077';
+// let baseUrl = 'http://127.0.0.1:8087';
 // 正式
-// let baseUrl = 'http127.0.0.1:8077';
+let baseUrl = 'http://117.50.192.56:8087';
 
 // 各种状态码
 let success_code = 2001;
@@ -144,6 +144,18 @@ function formatTimestamp(timestamp) {
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
 }
 
+// 时间戳转时间字符串 yyyy年-MM月-dd日 HH时:mm分
+function timestampToChineseDate(timestamp) {
+    var date = new Date(timestamp);
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+
+    return year + '年' + month + '月' + day + '日 ' + hour + '时' + minute + '分';
+}
 // a标签下载文件
 function downloadFile(url) {
     const body = document.querySelector("body");

@@ -18,7 +18,7 @@
         id, version, description, createtime, createrid, updatetime, updaterid
     </sql>
     <!-- 查询列表 -->
-    <select id="selectList" parameterType="java.util.Map" resultType="com.ruoyi.system.domain.MineponyServerUpdateLog">
+    <select id="getUpdateLogList" parameterType="java.util.Map" resultType="com.ruoyi.system.domain.MineponyServerUpdateLog">
         SELECT
         <include refid="Base_Column_List" />
         FROM minepony_server_update_log

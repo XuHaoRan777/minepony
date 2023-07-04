@@ -90,6 +90,7 @@
       },error: function(index, upload){
         // console.log(index); // 当前文件的索引
         // upload(); 重新上传的方法
+        layer.close(loadIndex);
         showAlert('上传失败！',4);
       }
     });

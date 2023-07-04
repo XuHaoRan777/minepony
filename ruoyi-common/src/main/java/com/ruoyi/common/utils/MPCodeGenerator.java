@@ -10,7 +10,7 @@ import java.util.List;
 public class MPCodeGenerator {
     public static void main(String[] args) {
         List<String> tables = new ArrayList<>();
-        tables.add("minepony_server_file");
+        tables.add("minepony_server_introduction");
         //tables.add("");
         FastAutoGenerator.create("jdbc:mysql://117.50.192.56:3306/minepony?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8","root","MuShaxhrxxh777")
                 .globalConfig(builder -> {

@@ -54,15 +54,12 @@ public class FrontFileController {
         }
     }
     /**
-     * 获取网站宣传图片
+     * 获取服务器文件
      * @param response
      * @return
      */
     @GetMapping("/serverFile")
     public void serverFile(HttpServletResponse response) {
-        String templateFullPath = "";
-
-        //File file = new File(templateFullPath);
         OutputStream out = null;
         FileInputStream in = null;
         BufferedInputStream br = null;
@@ -73,6 +70,9 @@ public class FrontFileController {
             if(list != null && list.size() > 0){
                 serverFile = list.get(0);
             }else {
+                // 设置一个404状态码来表示文件未找到
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.getWriter().write("File not found");
                 return;
             }
             in = new FileInputStream(serverFile.getSavepath());

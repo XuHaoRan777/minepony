@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.utils.AjaxJsonResult;
 import com.ruoyi.common.utils.ShiroUtils;
+import com.ruoyi.system.domain.MineponyServerBulletin;
+import com.ruoyi.system.domain.MineponyServerIntroduction;
 import com.ruoyi.system.domain.MineponyServerUpdateLog;
-import com.ruoyi.system.service.MineponyPromotionalImageService;
-import com.ruoyi.system.service.MineponyServerFileService;
-import com.ruoyi.system.service.MineponyServerUpdateLogService;
+import com.ruoyi.system.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +29,10 @@ public class FrontAjaxController extends BaseController{
     MineponyServerUpdateLogService serverUpdateLogService;
     @Autowired
     MineponyServerFileService serverFileService;
+    @Autowired
+    MineponyServerBulletinService serverBulletinService;
+    @Autowired
+    MineponyServerIntroductionService serverIntroductionService;
 
     /**
      * 获取服务器宣传图片列表
@@ -128,4 +132,26 @@ public class FrontAjaxController extends BaseController{
     public String removeServerFile(){
         return serverFileService.removeServerFile();
     }
+
+    /**
+     * 保存服务器公告
+     * @param serverBulletin
+     * @return
+     */
+    @PostMapping("/saveServerBulletin")
+    public String saveServerBulletin(@RequestBody MineponyServerBulletin serverBulletin){
+        return serverBulletinService.saveServerBulletin(serverBulletin,ShiroUtils.getUserId());
+    }
+
+    /**
+     * 保存服务器简介信息
+     * @param serverIntroduction
+     * @return
+     */
+    @PostMapping("/saveServerIntroduction")
+    public String saveServerIntroduction(@RequestBody MineponyServerIntroduction serverIntroduction){
+        return serverIntroductionService.saveServerIntroduction(serverIntroduction,ShiroUtils.getUserId());
+    }
+
+
 }

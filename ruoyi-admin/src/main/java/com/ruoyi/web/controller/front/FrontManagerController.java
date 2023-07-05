@@ -21,7 +21,7 @@ import java.util.Map;
 @CrossOrigin
 @RestController
 @RequestMapping("/frontManager")
-public class FrontAjaxController extends BaseController{
+public class FrontManagerController extends BaseController{
 
     @Autowired
     MineponyPromotionalImageService promotionalImageService;

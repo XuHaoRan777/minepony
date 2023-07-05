@@ -170,3 +170,8 @@ function downloadFile(url) {
 function isEmptyObject(obj) {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
+
+// 判断空字符串
+function isStringNotEmpty(str) {
+    return str !== null && str !== undefined && str.trim() !== "";
+}

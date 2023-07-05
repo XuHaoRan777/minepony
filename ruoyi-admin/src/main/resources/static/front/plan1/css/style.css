@@ -328,7 +328,7 @@ h2.title span{
 
 .profile-bg {
     background-color: transparent;
-    background: url("../images/profile.jpg");
+    /*background: url("../images/profile.jpg");*/
     position: absolute;
     background-clip: border-box;
     background-attachment: scroll;
@@ -342,6 +342,23 @@ h2.title span{
     background-position: -40px center, 0px center;
     width: 45%;
 }
+.default-profile{
+	background-color: transparent;
+	background: url("../images/profile.jpg");
+	position: absolute;
+	background-clip: border-box;
+	background-attachment: scroll;
+	background-origin: padding-box;
+	background-repeat: no-repeat;
+	left: 0px;
+	top: 0px;
+	height: 100%;
+	z-index: 2;
+	background-size: cover;
+	background-position: -40px center, 0px center;
+	width: 45%;
+}
+
 .profile-desc{
 	margin-bottom: 70px;
 	padding-left: 80px;

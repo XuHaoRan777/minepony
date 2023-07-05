@@ -108,7 +108,7 @@
 <!-- section profile start -->
 
 <section id="section-profile" class="section-padding">
-    <div class="profile-bg visible-md visible-lg"></div>
+    <div class="profile-bg visible-md visible-lg" id="server_Introduction_image"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-7 col-sm-12 pull-right">
@@ -451,6 +451,15 @@
     // 简介内容
     let server_Introduction_content = document.getElementById('server_Introduction_content');
     server_Introduction_content.innerText = serverIntroduction.content;
+    // 简介图片
+    let server_Introduction_image = document.getElementById('server_Introduction_image');
+    if(isStringNotEmpty(serverIntroduction.imagename)){
+        server_Introduction_image.style.backgroundImage ="url('"+baseUrl + '/front/file/promotionalImage/' + serverIntroduction.imagename+"')";
+    }else {
+        // 没有设置简介图片就使用默认图片
+        server_Introduction_image.classList.add("default-profile");
+
+    }
 </script>
 </body>
 </html>

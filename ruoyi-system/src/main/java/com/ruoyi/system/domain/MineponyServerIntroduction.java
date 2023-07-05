@@ -45,6 +45,18 @@ public class MineponyServerIntroduction implements Serializable {
     private String content;
 
     /**
+     * 简介图片文件名
+     */
+    @TableField("imagename")
+    private String imagename;
+
+    /**
+     * 图片保存路径
+     */
+    @TableField("savepath")
+    private String savepath;
+
+    /**
      * 更新时间
      */
     @TableField("updattime")

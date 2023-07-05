@@ -6,7 +6,31 @@
   <link rel="stylesheet" href="../../../../static/css/bootstrap5.3/bootstrap.min.css" th:href="@{/css/bootstrap5.3/bootstrap.min.css}" />
   <link rel="stylesheet" href="../../../../static/js/layui2.8/css/layui.css" th:href="@{/js/layui2.8/css/layui.css}" />
   <style>
-
+    img{
+      max-width: 400px;
+    }
+    .clearfix::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    .img-box{
+      width: 100%;
+      height: auto;
+      border: 2px solid grey;
+      border-radius: 5px;
+      margin-left: 0;
+      padding: 10px;
+      min-height: 130px;
+    }
+    .img-group{
+      width: auto;
+      border-radius: 5px;
+      border: 2px solid darkgray;
+      margin-bottom:10px;
+      margin-left:10px;
+      float: left;
+    }
   </style>
 </head>
 <body>
@@ -19,15 +43,33 @@
   <div class="col-sm-6" style="margin-top: 10px">
     <input class="form-control" id="title" name="title" th:field="*{title}" required />
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6" style="margin-top: 20px">
     <p class="text-start" style="font-size: 18px;" >服务器简介内容:</p>
   </div>
   <div class="col-sm-6" style="margin-top: 10px">
     <textarea style="width: 100%; height: 200px"  id="content" name="content" required>[[*{content}]]</textarea>
   </div>
 </form>
+
 <div class="col-sm-6" style="text-align: center">
   <button class="btn btn-primary" onclick="save()">保存</button>
+</div>
+
+<div class="col-md-6" style="margin-top: 20px">
+  <p class="text-start" style="font-size: 18px;" >服务器简介图片:</p>
+</div>
+
+<div class="col-sm-6 col-md-6" style="margin-top: 10px;text-align: center">
+  <div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+    <i class="layui-icon layui-icon-upload"></i>
+    <div>点击上传，或将图片拖拽到此处</div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="col-md-6 col-sm-6 img-box clearfix" id="img_box">
+
+  </div>
 </div>
 
 </body>
@@ -37,14 +79,83 @@
 <script src="../../../../static/js/axios/axios.min.js" th:src="@{/js/axios/axios.min.js}"></script>
 <script src="../../../../static/js/common.js" th:src="@{/js/common.js}"></script>
 <script>
-  let dataPrefix = '/front/ajax';
+  let dataPrefix = '/frontManager';
 
   document.addEventListener("DOMContentLoaded", function() {
 
-
+    getImageGroup();
 
   });
 
+  function getImageGroup(){
+    // 获取上传的图片列表
+    instance.post(dataPrefix + '/getServerIntroduction', "")
+            .then(response => {
+              // 请求成功，处理响应数据
+              if(response.data.code === success_code){
+                // showAlert(response.data.message,1);
+              }else if(response.data.code === warning_code){
+                showAlert(response.data.message,3);
+                return;
+              }else if(response.data.code === error_code || response.data.code === bad_code){
+                showAlert(response.data.message,4);
+                return;
+              }
+              // console.log(response.data);
+              let img_obj = response.data.data;
+              let img_group = '';
+              let img_box = document.getElementById('img_box');
+              if(!isEmptyObject(img_box)){
+                img_group += '<div class="img-group">' +
+                        '             <img src="'+ baseUrl + '/front/file/promotionalImage/' + img_obj.imagename +'" class="img-fluid" alt="' + img_obj.imagename + '"/>' +
+                        '     </div>';
+                // 设置id，防止没有服务器简介记录时就上传了图片
+                document.getElementById('id').value = img_obj.id;
+              }else {
+                img_group += '<p>（未上传图片）</p>';
+              }
+              img_box.innerHTML = img_group;
+            })
+            .catch(error => {
+              // 请求失败，处理错误
+              console.error(error);
+              showAlert(error,4);
+            });
+  }
+
+  // layui 上传文件
+  let uploadParam = {  };
+  layui.use(function(){
+    var upload = layui.upload;
+    var $ = layui.$;
+    // 渲染
+    upload.render({
+      elem: '#ID-upload-demo-drag',
+      url: baseUrl + dataPrefix+'/saveIntroductionImage', // 此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+      accept: 'images',
+      data: {
+        params: function(){
+          return JSON.stringify(uploadParam);
+        }
+      },before: function(obj){
+        loadIndex = layer.msg('正在上传...', {
+          icon: 16,
+          shade: 0.3
+        });
+      }, done: function(res){
+        layer.close(loadIndex);
+        showAlert('上传成功',1);
+        // console.log(res)
+        // 渲染列表
+        getImageGroup();
+      },error: function(index, upload){
+        // console.log(index); // 当前文件的索引
+        // upload(); 重新上传的方法
+        layer.close(loadIndex);
+        showAlert('上传失败！',4);
+      }
+    });
+  });
 
   function save(){
     if($("#from-data").validate().form()){

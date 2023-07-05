@@ -18,6 +18,9 @@ import java.util.Map;
 @Mapper
 public interface MineponyServerUpdateLogMapper extends BaseMapper<MineponyServerUpdateLog> {
 
+    // 更新日志维护页面列表查询
     List<MineponyServerUpdateLog> getUpdateLogList(Map<String,Object> params);
 
+    // 宣传页面日志记录获取
+    List<MineponyServerUpdateLog> getUpdateListDesc(Map<String,Object> params);
 }

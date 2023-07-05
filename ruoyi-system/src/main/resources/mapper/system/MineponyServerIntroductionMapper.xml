@@ -7,13 +7,15 @@
         <id column="id" property="id" />
         <result column="title" property="title" />
         <result column="content" property="content" />
+        <result column="imagename" property="imagename" />
+        <result column="savepath" property="savepath" />
         <result column="updattime" property="updattime" />
         <result column="updaterid" property="updaterid" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, content, updattime, updaterid
+        id, title, content, imagename, savepath, updattime, updaterid
     </sql>
 
 </mapper>

@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/front/ajax")
+@RequestMapping("/frontManager")
 public class FrontAjaxController extends BaseController{
 
     @Autowired
@@ -153,5 +153,22 @@ public class FrontAjaxController extends BaseController{
         return serverIntroductionService.saveServerIntroduction(serverIntroduction,ShiroUtils.getUserId());
     }
 
+    /**
+     * 保存服务器简介图片
+     * @param file
+     * @return
+     */
+    @PostMapping("/saveIntroductionImage")
+    public String saveIntroductionImage(MultipartFile file){
+        return serverIntroductionService.saveIntroductionImage(file,ShiroUtils.getUserId());
+    }
 
+    /**
+     * 获取当前服务器宣传信息
+     * @return
+     */
+    @PostMapping("/getServerIntroduction")
+    public String getServerIntroduction(){
+        return serverIntroductionService.getServerIntroduction();
+    }
 }

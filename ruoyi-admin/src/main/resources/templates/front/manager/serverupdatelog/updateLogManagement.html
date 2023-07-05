@@ -63,7 +63,7 @@
 <script src="../../../../static/js/common.js" th:src="@{/js/common.js}"></script>
 <script>
     var viewPrefix = baseUrl + '/front';
-    var dataPrefix = baseUrl + '/front/ajax';
+    var dataPrefix = baseUrl + '/frontManager';
 
     document.addEventListener("DOMContentLoaded", function() {
 
@@ -142,7 +142,7 @@
 
     // 删除
     function removeServerLog(id){
-        instance.post('/front/ajax/removeUpdateLog/'+id, '')
+        instance.post('/frontManager/removeUpdateLog/'+id, '')
             .then(response => {
                 // 请求成功，处理响应数据
                 // console.log(response.data);

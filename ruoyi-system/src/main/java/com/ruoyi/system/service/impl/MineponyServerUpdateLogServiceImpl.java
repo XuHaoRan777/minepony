@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,8 +88,8 @@ public class MineponyServerUpdateLogServiceImpl extends ServiceImpl<MineponyServ
      */
     @Override
     public List<MineponyServerUpdateLog> getUpdateListDesc() {
-        QueryWrapper<MineponyServerUpdateLog> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("id");
-        return list(queryWrapper);
+        Map<String,Object> map = new HashMap<>();
+        map.put("limit",4);
+        return baseMapper.getUpdateListDesc(map);
     }
 }

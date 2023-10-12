@@ -9,7 +9,8 @@ ruoyi:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: D:/ruoyi/uploadPath
+  profile: /home/minePony/minepony_file/upload/
+  #profile: F:/JAVA_project/minepony_file/upload
   # 获取ip地址开关
   addressEnabled: false
 
